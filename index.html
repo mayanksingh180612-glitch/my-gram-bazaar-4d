@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gram Bazzar | Mayank Singh</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#087a48;--dark:#073d2b;--gold:#ffd166;--bg:#f5f8f4}
+body{font-family:Arial,sans-serif;background:var(--bg);color:#20342a}
+header{background:linear-gradient(120deg,#064b31,#0c9254);color:white;padding:20px 6%;position:sticky;top:0;z-index:10;box-shadow:0 4px 15px #0002}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:26px;font-weight:900}.logo span{color:var(--gold)}
+.nav button,.btn{border:0;border-radius:10px;padding:11px 17px;cursor:pointer;font-weight:bold}
+.cart-btn{background:var(--gold);color:#173c29}
+.hero{padding:65px 6%;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center;background:linear-gradient(135deg,#e0f6e7,#fff6d8)}
+.hero h1{font-size:clamp(34px,5vw,57px);line-height:1.1;color:var(--dark);margin:15px 0}
+.hero p{line-height:1.8;color:#476452}
+.hero img{width:100%;height:300px;object-fit:cover;border-radius:24px;box-shadow:0 15px 40px #164b2a26}
+.tag{display:inline-block;background:#d2f4dd;color:#08633a;padding:8px 13px;border-radius:20px;font-weight:bold}
+.btn{display:inline-block;background:var(--green);color:white;margin-top:20px;text-decoration:none}
+.section{padding:40px 6%}
+.section h2{font-size:28px;color:var(--dark);margin-bottom:20px}
+.categories{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+.cat{padding:10px 15px;border:1px solid #d7e6d9;background:white;border-radius:22px;cursor:pointer}
+.cat.active,.cat:hover{background:var(--green);color:white}
+.search{width:100%;padding:15px;border:1px solid #d7e6d9;border-radius:12px;font-size:16px;margin-bottom:22px;outline-color:var(--green)}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 5px 18px #163d2010;transition:.25s;border:1px solid #e8eee8}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 25px #163d2020}
+.card img{width:100%;height:175px;object-fit:cover;background:#eee}
+.info{padding:15px}
+.info h3{font-size:17px;margin-bottom:8px}
+.info p{font-size:13px;color:#718078;min-height:32px}
+.price{font-size:21px;font-weight:bold;color:var(--green);margin:12px 0}
+.price small{font-size:12px;color:#768278;font-weight:normal}
+.add{width:100%;background:var(--green);color:white;border:0;padding:11px;border-radius:9px;cursor:pointer;font-weight:bold}
+.add:hover{background:var(--dark)}
+.no-results{padding:30px;text-align:center;grid-column:1/-1}
+.about{background:#e3f4e8;border-radius:20px;padding:30px;line-height:1.9}
+footer{text-align:center;background:var(--dark);color:white;padding:30px 15px;line-height:2}
+.cart-panel{position:fixed;right:0;top:0;height:100%;width:min(400px,100%);background:white;z-index:30;box-shadow:-10px 0 30px #0002;padding:22px;overflow:auto;display:none}
+.cart-panel.open{display:block}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cart-row{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid #eee}
+.cart-row button{border:0;background:#ffe4e4;padding:5px 9px;border-radius:6px;cursor:pointer}
+.close{font-size:24px;border:0;background:none;cursor:pointer}
+.total{font-size:22px;font-weight:bold;margin:25px 0}
+.checkout{width:100%;background:#128c4b;color:white;padding:14px;border:0;border-radius:10px;font-weight:bold;cursor:pointer}
+@media(max-width:900px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{grid-template-columns:1fr}}
+@media(max-width:600px){.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card img{height:130px}.info{padding:10px}.info h3{font-size:15px}.price{font-size:18px}.hero{padding:40px 5%}.section{padding:30px 4%}.logo{font-size:22px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">🌾 Gram <span>Bazzar</span></div>
+    <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="tag">🌿 Welcome to our Bazzar</span>
+    <h1>Har Zaroorat,<br>Ek Hi Bazzar!</h1>
+    <p>Rice, Wheat, Furniture, Diwali Diya, Lights, Plants aur DJ Sound System — apni pasand ka samaan yahan dekho.</p>
+    <p><b>Website by Mayank Singh | Class 9th</b></p>
+    <a href="#shop" class="btn">🛍️ Explore Products</a>
+  </div>
+  <img src="https://spiderimg.amarujala.com/assets/images/2022/11/20/5_6379f3ec5ba46.jpg" alt="Rice wheat aur grocery market" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800'">
+</section>
+
+<section class="section" id="shop">
+  <h2>🛍️ Hamare Products</h2>
+  <input id="search" class="search" placeholder="🔍 Product search karo..." oninput="renderProducts()">
+  <div class="categories" id="categories"></div>
+  <div class="products" id="products"></div>
+</section>
+
+<section class="section">
+  <div class="about">
+    <h2>🌟 About Gram Bazzar</h2>
+    <p>Namaste! Mera naam <b>Mayank Singh</b> hai aur main Class 9th ka student hoon. Ye meri Gram Bazzar website hai. Yahan alag-alag products ko ek jagah par dikhaya gaya hai.</p>
+    <p>Ye ek demo shopping website hai. Product ki asli availability, price aur delivery seller se confirm karein.</p>
+  </div>
+</section>
+
+<footer>
+  <h2>🌾 Gram Bazzar</h2>
+  <p>Made with ❤️ by Mayank Singh</p>
+  <p>Class 9th | Learning Web Development</p>
+  <p>© 2026 Gram Bazzar</p>
+</footer>
+
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head">
+    <h2>🛒 Your Cart</h2>
+    <button class="close" onclick="closeCart()">✕</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="total">Total: ₹<span id="total">0</span></div>
+  <button class="checkout" onclick="checkout()">Order on WhatsApp</button>
+  <p style="font-size:12px;color:#777;margin-top:12px">WhatsApp order ke liye neeche code mein apna number set karein.</p>
+</div>
+
+<script>
+const productsData = [
+ {id:1,name:"Premium Rice (Chawal)",cat:"Grains",price:50,unit:"1 kg",emoji:"🌾",img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600"},
+ {id:2,name:"Wheat (Gehun)",cat:"Grains",price:32,unit:"1 kg",emoji:"🌾",img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600"},
+ {id:3,name:"Basmati Rice",cat:"Grains",price:80,unit:"1 kg",emoji:"🍚",img:"https://images.unsplash.com/photo-1516684732162-798a0062be99?w=600"},
+ {id:4,name:"Wooden Furniture",cat:"Furniture",price:2500,unit:"1 set",emoji:"🪑",img:"https://www.furniselan.com/cdn/shop/products/madrid-sheesham-wood-6-seater-dining-table-set-with-6-chair-for-dining-room-579820.jpg?v=1679739869"},
+ {id:5,name:"Home Furniture Table",cat:"Furniture",price:1200,unit:"1 piece",emoji:"🪵",img:"https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=600"},
+ {id:6,name:"Clay Diya (Mitti ka Diya)",cat:"Diwali",price:40,unit:"Pack",emoji:"🪔",img:"https://cdnnew.igp.com/f_auto%2Cq_auto%2Ct_pnopt20prodlp/products/p-multi-colored-hand-painted-clay-diya-set-of-4--120825-m.jpg"},
+ {id:7,name:"Decorative Diwali Diya",cat:"Diwali",price:120,unit:"Set",emoji:"🪔",img:"https://ksiindiahandicrafts.com/cdn/shop/files/cow-dung-diya-with-ghee.jpg?v=1771246353&width=1200"},
+ {id:8,name:"Joylite / Fairy Lights",cat:"Lights",price:150,unit:"1 string",emoji:"💡",img:"https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"},
+ {id:9,name:"LED Decorative Lights",cat:"Lights",price:250,unit:"1 set",emoji:"✨",img:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=600"},
+ {id:10,name:"Small Green Plant",cat:"Plants",price:80,unit:"1 pot",emoji:"🪴",img:"https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=600"},
+ {id:11,name:"Small Tree Plant",cat:"Plants",price:180,unit:"1 plant",emoji:"🌱",img:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=600"},
+ {id:12,name:"DJ Sound System",cat:"DJ",price:3500,unit:"Demo price",emoji:"🔊",img:"https://prosoundlighting.com.au/cdn/shop/files/PACK06_gif.gif?v=1715318405"},
+ {id:13,name:"DJ Speaker",cat:"DJ",price:1800,unit:"1 piece",emoji:"🎵",img:"https://images.metro-marketplace.eu/item_image/c0ffddb0-1163-49f9-9735-eb7f5e7ef952?impolicy=pdp_mobile_main_preview&imwidth=768"},
+ {id:14,name:"Home Essentials",cat:"Home",price:199,unit:"1 pack",emoji:"🏠",img:"https://images.unsplash.com/photo-1556911220-bff31c812dba?w=600"},
+ {id:15,name:"Storage Basket",cat:"Home",price:120,unit:"1 piece",emoji:"🧺",img:"https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=600"},
+ {id:16,name:"Diwali Decoration",cat:"Diwali",price:199,unit:"1 set",emoji:"🎊",img:"https://images.unsplash.com/photo-1605379399642-870262d3d051?w=600"}
+];
+
+let selectedCategory="All";
+let cart=[];
+
+const categories=["All","Grains","Furniture","Home","Diwali","Lights","Plants","DJ"];
+
+function renderCategories(){
+ document.getElementById("categories").innerHTML=categories.map(c=>
+ `<button class="cat ${c===selectedCategory?'active':''}" onclick="setCategory('${c}')">${c==="All"?"🌟 All Products":c}</button>`
+ ).join("");
+}
+function setCategory(c){selectedCategory=c;renderCategories();renderProducts();}
+
+function renderProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=productsData.filter(p=>
+ (selectedCategory==="All"||p.cat===selectedCategory)&&
+ (p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q))
+ );
+ document.getElementById("products").innerHTML=list.length?list.map(p=>`
+ <article class="card">
+   <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e5f3e8/087a48?text=${encodeURIComponent(p.name)}'">
+   <div class="info">
+     <h3>${p.emoji} ${p.name}</h3>
+     <p>${p.cat} · ${p.unit}</p>
+     <div class="price">₹${p.price} <small>/${p.unit}</small></div>
+     <button class="add" onclick="addToCart(${p.id})">＋ Add to Cart</button>
+   </div>
+ </article>`).join(""):`<div class="no-results">😕 Koi product nahi mila. Doosra naam search karein.</div>`;
+}
+
+function addToCart(id){
+ const p=productsData.find(x=>x.id===id);
+ const item=cart.find(x=>x.id===id);
+ if(item)item.qty++;else cart.push({...p,qty:1});
+ updateCart();
+}
+function changeQty(id,delta){
+ const item=cart.find(x=>x.id===id);
+ if(!item)return;
+ item.qty+=delta;
+ if(item.qty<=0)cart=cart.filter(x=>x.id!==id);
+ updateCart();
+}
+function updateCart(){
+ document.getElementById("count").textContent=cart.reduce((s,p)=>s+p.qty,0);
+ document.getElementById("total").textContent=cart.reduce((s,p)=>s+p.price*p.qty,0);
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map(p=>`
+ <div class="cart-row">
+ <div><b>${p.name}</b><br>₹${p.price} × ${p.qty}<br>
+ <button onclick="changeQty(${p.id},-1)">−</button>
+ <button onclick="changeQty(${p.id},1)">＋</button></div>
+ <b>₹${p.price*p.qty}</b></div>`).join(""):"<p>Cart abhi khaali hai. Products add karo!</p>";
+}
+function openCart(){document.getElementById("cartPanel").classList.add("open");}
+function closeCart(){document.getElementById("cartPanel").classList.remove("open");}
+function checkout(){
+ if(!cart.length){alert("Pehle cart mein product add karein!");return;}
+ const message="Namaste Gram Bazzar! Mujhe ye products order karne hain:\n"+
+ cart.map(p=>`${p.name} x ${p.qty} = Rs. ${p.price*p.qty}`).join("\n")+
+ "\nTotal: Rs. "+cart.reduce((s,p)=>s+p.price*p.qty,0);
+ // Apna WhatsApp number country code ke saath daalein.
+ const phone="91XXXXXXXXXX";
+ if(phone.includes("X")){
+   alert("WhatsApp number set karne ke liye code mein 91XXXXXXXXXX ko apne number se replace karein.\n\n"+message);
+   return;
+ }
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(message),"_blank");
+}
+renderCategories();
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>
